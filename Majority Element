@@ -1,0 +1,12 @@
+#include <bits/stdc++.h> 
+
+int findMajorityElement(int arr[], int n) {
+	// Write your code here.
+    map<int,int>store;
+    for(int i = 0 ; i<n ;i++)store[arr[i]]++;
+    
+    for(auto num = store.begin() ;num!=store.end() ;num++){
+        if((num->second)>(n/2))return num->first;
+    }
+    return -1;
+}
