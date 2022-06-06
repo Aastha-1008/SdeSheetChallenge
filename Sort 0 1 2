@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+
+void sort012(int *arr, int n)
+{
+   //   Write your code here
+    
+    int zeropointer = 0 , twopointer = n-1 , p1 = 0;
+    while(p1 <= twopointer){
+        if(arr[p1]==0){
+            swap(arr[zeropointer],arr[p1]);
+            zeropointer++;
+            p1++;
+        }
+        else if(arr[p1]==2){
+            swap(arr[twopointer],arr[p1]);
+            twopointer--;
+        }
+        else{
+            p1++;
+        }
+    }
+}
