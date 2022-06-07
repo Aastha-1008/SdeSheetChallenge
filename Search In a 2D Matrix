@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+#include <vector>
+
+bool findTargetInMatrix(vector < vector < int >> & mat, int m, int n, int target) {
+    // Write your code here.
+    int row = -1 ;
+    for(int i = 0 ; i<m ; i++){
+        if(mat[i][0] > target){
+            row = i-1;
+            break;
+        }
+        if(mat[i][0] == target)return true;
+    }
+    if(row == -1)row = m-1;
+    int left = 0 , right = n-1;
+    while(left <= right){
+        if(mat[row][left] == target)return true;
+        if(mat[row][right]== target)return true;
+        left++;
+        right--;
+    }
+    return false;
+}
