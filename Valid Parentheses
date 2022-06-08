@@ -1,0 +1,27 @@
+bool isValidParenthesis(string e)
+{
+    // Write your code here.
+    int size = e.length();
+    if(size == 1 || e[0]==')' || e[0]==']'|| e[0]=='}'  || e[size-1]=='(' || e[size-1]=='[' || e[size-1]=='{')return false;
+    stack<char>s;
+    for(int i = 0 ; i<size ; i++){
+        if( e[i]=='(' || e[i]=='{' || e[i]=='[' )s.push(e[i]);
+        else{
+            if(s.empty())return false;
+            if(e[i]==')'){
+                if(s.top()!='(')return false;
+                else s.pop();
+            }
+            else if(e[i]==']'){
+                if(s.top()!='[')return false;
+                else s.pop();
+            }
+            else if(e[i]=='}'){
+                if(s.top()!='{')return false;
+                else s.pop();
+            }
+        }
+    }
+    if(!s.empty())return false;
+    return true;
+}
