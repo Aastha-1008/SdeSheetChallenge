@@ -1,0 +1,18 @@
+void color(vector<vector<int>> &image , int x, int y, int newc , int prev,int row , int col ){
+    if(x<0 || y<0 || x>=row || y>=col || image[x][y]!=prev)return;
+    image[x][y] = newc;
+    color(image,x+1,y,newc,prev,row,col);
+    color(image,x-1,y,newc,prev,row,col);
+    color(image,x,y+1,newc,prev,row,col);
+    color(image,x,y-1,newc,prev,row,col);
+    return;
+}
+
+vector<vector<int>> floodFill(vector<vector<int>> &image, int x, int y, int newColor)
+{
+    // Write your code here.
+    int colo = image[x][y];
+    if(colo == newColor)return image;
+    color(image,x,y,newColor,colo,image.size(),image[0].size());
+    return image;
+}
