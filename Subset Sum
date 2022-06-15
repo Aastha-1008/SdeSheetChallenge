@@ -1,0 +1,22 @@
+vector<int>ans;
+void find(vector<int> &num , int st , int en, int sum){
+    if(st==en){
+        ans.push_back(sum);
+        return ;
+    }
+    find(num , st+1 , en , sum );
+    find(num , st+1 , en , sum+num[st]);
+    
+}
+
+vector<int> subsetSum(vector<int> &num)
+{
+    // Write your code here.
+    ans.clear();
+    if(num.size()==NULL)return ans;
+    int sum = 0 ;
+    find(num, 0,num.size(),sum);
+    sort(ans.begin(),ans.end());
+    return ans;
+    
+}
