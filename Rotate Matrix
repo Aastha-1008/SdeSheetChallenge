@@ -1,0 +1,35 @@
+#include <bits/stdc++.h> 
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    // Write your code here
+    int fr = 0 , lr = n-1 , fc = 0 , lc = m-1 ;
+    while(fr<lr && fc<lc){
+        int temp , prev = mat[fr][fc];
+        for(int i = fc+1 ; i<=lc ; i++){
+            temp = mat[fr][i];
+            mat[fr][i] = prev;
+            prev = temp;
+        }
+        for(int i = fr+1 ; i<=lr ;i++){
+            temp = mat[i][lc];
+            mat[i][lc] = prev;
+            prev = temp;
+        }
+        for(int i = lc-1 ; i>=fc ; i--){
+            temp = mat[lr][i];
+            mat[lr][i] = prev;
+            prev = temp;
+        }
+        for(int i = lr-1; i>=fr ; i--){
+            temp = mat[i][fc];
+            mat[i][fc] = prev;
+            prev = temp;
+        }
+        fr++;
+        fc++;
+        lc--;
+        lr--;
+    }
+
+}
