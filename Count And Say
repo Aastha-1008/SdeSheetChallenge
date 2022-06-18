@@ -1,0 +1,24 @@
+string writeAsYouSpeak(int n) 
+{
+    string ans = "1";
+    if(n==1)return ans;
+    while(n>1){
+        int size = ans.length();
+        int s = 0;
+        int count = 0 ;
+        string a ="";
+        while(s<size){
+            count++;
+            if(ans[s]!=ans[s+1]){
+                a += to_string(count);
+                a += ans[s];
+                count = 0 ;
+            }
+            s++;      
+        }
+       ans = a;
+       a = "";
+       n--;
+    }
+    return ans;
+}
