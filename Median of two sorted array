@@ -1,0 +1,66 @@
+double median(vector<int> nums1, vector<int> nums2)
+{
+    // Write your code here.
+     int s1 = nums1.size();
+     int s2 = nums2.size();
+     int val,f= 0, i = 0 , j = 0,v = 0 , prev;
+        
+     double ans = 0;
+        
+     if((s1+s2)%2 == 0 ){
+            f = 1;
+            val = ((s1+s2)/2)-1;            
+        }
+      else  
+            val = ((s1+s2)/2); 
+        
+        
+        while(i<s1 && j<s2 && v<=val){
+            if(nums1[i]<nums2[j]){
+                if(v==val){ans = nums1[i];v++;i++;break;}
+                i++;
+                v++;
+                prev = nums1[i];
+            }
+            else{ 
+                if(v==val){ans = nums2[j];j++;v++;break;}
+                j++;
+                v++;
+                prev = nums2[j];
+            }
+            
+        }
+        while(i<s1 && v<=val){
+            if(v==val){ans = nums1[i];i++;v++;break;}
+            i++;
+            v++;
+            prev = nums1[i];
+        }
+        
+        while(j<s2 && v<=val){
+            if(v==val){ans = nums2[j];j++;v++;break;}
+            j++;
+            v++;
+            prev = nums2[j];
+        }
+        if(f==1){
+            if(i<s1 && j<s2){
+                if(nums1[i]<nums2[j]){
+                    ans = (double)(ans+nums1[i])/(double)2;
+                }
+                else{
+                    ans = (double)(ans+nums2[j])/(double)2;
+                }
+            }
+            else if(i<s1){
+                ans = (double)(ans+nums1[i])/(double)2;   
+            }
+            else{
+                    ans = (double)(ans+nums2[j])/(double)2;
+            }
+        }
+        else
+            ans = (double)ans;
+        return ans;
+    
+}
