@@ -1,0 +1,48 @@
+/* -------------------------------------------  C P  P       S  O  L  U  T  I  O  N ----------------------------------------------------------------*/
+vector<vector<int>>ans;
+
+void find(vector<int>v,int st , int en,vector<int>&arr){
+    if(st>en){
+        ans.push_back(arr);
+        return;
+    }
+    arr.push_back(v[st]);
+    find(v,st+1,en,arr);
+    arr.pop_back();
+    find(v,st+1,en,arr);
+}
+
+vector<vector<int>> pwset(vector<int>v)
+{
+    //Write your code here
+    ans.clear();
+    vector<int>arr;
+    find(v,0,v.size()-1,arr);
+    return ans;
+}
+
+/*--------------------------------------  J  A  V  A          S  O  L  U  T  I  O  N   --------------------------------------------------------------*/
+import java.util.*;
+public class Solution {
+    static ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+    
+    public static void find(ArrayList<Integer>arr,int st, int en, ArrayList<Integer>a){
+        if(st > en){
+            ans.add(new ArrayList<Integer>(a));
+            return;
+        }
+        a.add(arr.get(st));
+        find(arr,st+1,en,a);
+        a.remove(a.size()-1);
+        find(arr,st+1,en,a);
+    }
+    
+	public static ArrayList<ArrayList<Integer>> pwset(ArrayList<Integer> arr) {
+		// WRITE YOUR CODE HERE
+        ArrayList<Integer> a = new ArrayList<>();
+        int size = arr.size();
+        find(arr,0,size-1,a);
+        return ans;
+	}
+}
+
