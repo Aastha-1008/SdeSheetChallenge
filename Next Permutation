@@ -1,3 +1,4 @@
+/*----------------------------------------------------  J  A  V  A      S  O  L  U  T  I  O  N     -------------------------------------------------*/
 import java.util.* ;
 import java.io.*; 
 import java.util.ArrayList;
@@ -34,4 +35,34 @@ public class Solution
         reversse(permutation,ind1+1,n-1);
         return permutation;
 	}
+}
+
+
+
+/* -------------------------------------------------  C P  P         S  O  L  U  T  I  O  N   --------------------------------------------------------*/
+
+#include <bits/stdc++.h> 
+void reversse(vector<int> &arr, int i , int j ){
+    while(i<j){
+        swap(arr[i++],arr[j--]);
+    }
+}
+vector<int> nextPermutation(vector<int> &permutation, int n)
+{
+    //  Write your code here.
+    int ind1 = -1 , ind2 = -1 ;
+    for(int i = n-2 ; i>=0 ; i--){
+        if(permutation[i] < permutation[i+1]){
+            ind1 = i;
+            break;
+        }
+    }
+    if(ind1>=0){
+        for(int i = n-1 ; i>=0 ; i--){
+            if(permutation[i]>permutation[ind1]){ind2 = i;break;}
+        }
+    }
+    swap(permutation[ind1],permutation[ind2]);
+    reversse(permutation,ind1+1,n-1);
+    return permutation;
 }
