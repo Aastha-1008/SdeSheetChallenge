@@ -1,0 +1,41 @@
+#include <bits/stdc++.h> 
+/*   recursive approach 
+int find(int row,int col ,int  m ,int n){
+    
+    if(row==m || col==n)return 0;
+    if(row==m-1 && col == n-1)return 1;
+    int right = find(row,col+1, m , n);
+    int down = find(row+1,col ,  m ,n);
+    
+    return right+down;
+}
+int uniquePaths(int m, int n) {
+	// Write your code here.
+    return  find(0,0,m,n);
+}   */
+
+/*      optimal approach        
+int find(int row,int col ,int  m ,int n,vector<vector<int>>&dp){
+    
+    if(row==m || col==n)return 0;
+    if(row==m-1 && col == n-1)return 1;
+    if(dp[row][col]!=-1)return dp[row][col];
+    else dp[row][col]  =  find(row,col+1,m,n,dp) + find(row+1,col , m,n,dp);
+  
+}
+int uniquePaths(int m, int n) {
+    // Write your code here.
+    vector<vector<int>>dp;
+    return  find(0,0,m,n,dp);
+}   */
+/*-------------  optimal  approach------------*/
+int uniquePaths(int m, int n) {
+    // Write your code here.
+    int N = m+n-2;
+    int r = n-1;
+    int result = 1;
+    for(int i = 1 ; i<=r ; i++){
+        result = result*(N-r+i)/i;
+    }
+    return result;
+} 
