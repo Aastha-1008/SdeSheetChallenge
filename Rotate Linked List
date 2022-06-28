@@ -1,0 +1,92 @@
+/*----------------------------------------- c p  p        S  o  l  u  t  i  o  n  ---------------------------------------------------------------*/
+#include <bits/stdc++.h> 
+/********************************
+
+    Following is the class structure of the Node class:
+    
+    class Node
+    {
+    	public:
+    	    int data;
+    	    Node *next;
+    	    Node(int data)
+    	    {
+    	        this->data = data;
+    	        this->next = NULL;
+    	    }
+    };
+
+********************************/
+
+
+Node *rotate(Node *head, int k) {
+     // Write your code here.
+    if(k==0)return head;
+    Node *temp = head;
+    int len = 1;
+    while(temp->next!=NULL){temp = temp->next;len++;}
+    if(len==k)return head;
+    if(k>len){
+        k = k%len;
+    }
+//     cout<<len<<endl;
+    temp = head;
+    int e = len - k-1;
+    while(e--){
+        temp = temp->next;
+    }
+//     cout<<temp->data<<endl;
+    Node* point = temp->next;
+    temp->next = NULL;
+    temp = point;
+    k--;
+    while(k--){
+        temp = temp->next;
+    }
+    temp->next = head;
+    head = point;
+    return head;
+}
+
+
+/* ----------------------------- j  a  v  a      s  o  l  u  t  i  o  n -----------------------------------------------------------------*/
+
+import java.util.* ;
+import java.io.*; 
+/***********************************************
+    Following is the class structure of the Node class:
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int x) {
+            this.data = x;
+            this.next = null;
+        }
+    }
+
+************************************************/
+
+public class Solution {
+    public static Node rotate(Node head, int k) {
+        // Write your code here.
+        if(head== null || head.next==null || k==0)return head;
+        Node temp = head;
+        int len = 1;
+        while(temp.next!=null){
+            temp = temp.next;
+            len++;
+        }
+        k = k%len;
+        k = len - k;
+        temp.next = head;
+        while(k>0){
+            temp = temp.next;
+            k--;
+        }
+        head = temp.next;
+        temp.next = null;
+        return head;
+    }
+}
