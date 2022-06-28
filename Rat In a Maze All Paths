@@ -1,0 +1,26 @@
+vector<vector<int>>ans;
+
+void solve(int row ,int col,vector<vector<int>>&maze,int n,vector<int>&arr){
+    if(row==n-1 && col==n-1){
+        arr[row*n+col]=1;
+        ans.push_back(arr);
+        return;
+    }
+    if(row<0 || col<0 ||row>=n ||col>=n||maze[row][col]==0|| arr[row*n+col]==1)return;
+    
+    arr[row*n+col] = 1;
+    solve(row+1,col,maze,n,arr);
+    solve(row,col+1 ,maze,n,arr);
+    solve(row-1,col,maze,n,arr);
+    solve(row,col-1,maze,n,arr);
+    arr[row*n+col] = 0;
+    
+}
+
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  // Write your code here.
+    ans.clear();
+    vector<int>arr(n*n,0);
+    solve(0,0,maze,n,arr);
+    return ans;
+}
