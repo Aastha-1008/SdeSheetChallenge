@@ -1,0 +1,48 @@
+/*------------------------------------- C  P  P         S  O  L  U  T  I  O  N  -----------------------------------------------------------------*/
+#include <bits/stdc++.h>
+
+
+int subarraysXor(vector<int> &arr, int x)
+{
+    //    Write your code here.
+    map<int,int>m;
+    int count  =0 ;
+    int  xor_ans  =  0;
+    for(int  i = 0 ; i<arr.size() ; i++){
+        xor_ans  ^=  arr[i];
+        if(xor_ans == x)count++;
+        int s = x ^ xor_ans;
+        auto itr = m.find(s);
+        if(itr!=m.end()){
+            count += itr->second;
+        }
+        m[xor_ans]++;
+    }
+    return count;
+}
+
+
+/* -------------------------------------- J  A  V  A     S  O  L  U  T  I  O  N ------------------------------------------------------------------*/
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+	public static int subarraysXor(ArrayList<Integer> arr, int x) {
+		// Write your code here.
+        HashMap<Integer,Integer>m = new HashMap<Integer,Integer>();
+        int n = arr.size();
+        int count = 0 ; 
+        int xor_sum  = 0 ;
+        for(int i = 0 ; i<n ; i++){
+            xor_sum ^= arr.get(i);
+            if(xor_sum == x)count++;
+            if(m.get(xor_sum^x)!=null){
+                count += m.get(xor_sum^x);
+            }
+            if(m.get(xor_sum)!=null)m.put(xor_sum,m.get(xor_sum)+1);
+            else m.put(xor_sum,1);
+        }
+        return count;
+	}
+}
