@@ -1,0 +1,52 @@
+#include <bits/stdc++.h> 
+
+bool isPalindrome(LinkedListNode<int> *head) {
+    // Write your code here.
+    if(head == NULL || head->next==NULL)return true;
+    
+    int count = 0 ; 
+    LinkedListNode<int>* temp = head;
+    
+    while(temp!=NULL){
+        count++;
+        temp = temp->next;
+    }
+    
+    int f = 0 ;
+    
+    if(count%2==1)    f = 1;
+    
+    int c = count/2;
+    
+    LinkedListNode<int>*p1=head;
+    LinkedListNode<int>*p2=head;
+    c--;
+    while(c--){
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    
+    if(f==1){
+        p2 = p2->next;
+    }
+    
+    p2=p2->next;
+    p1->next = NULL;
+//     cout<<p1->data<<" "<<p2->data<<endl;
+    LinkedListNode<int>* t1 = head->next;
+    LinkedListNode<int>* s1;
+    while(head != p1){
+        s1 = t1->next;
+        t1->next = head;
+        head = t1;
+        t1 = s1;
+    }
+    while(p1!=NULL && p2!=NULL){
+        if(p1->data != p2->data){
+            return false;
+        }
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    return true;
+}
