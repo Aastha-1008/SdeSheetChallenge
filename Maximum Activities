@@ -1,0 +1,33 @@
+#include<algorithm>
+struct activity{
+    int start;
+    int end;
+    int ind;
+};
+bool comparator (struct activity m1 , struct activity m2){
+    if(m1.end < m2.end)return true;
+    if(m1.end > m2.end)return false;
+    if(m1.ind < m2.end)return true;
+    return false;
+}
+
+int maximumActivities(vector<int> &start, vector<int> &finish) {
+    // Write your code here.
+    int size = start.size();
+    struct activity arr[size];
+    for(int i = 0 ; i<size ; i++){
+        arr[i].start = start[i];
+        arr[i].end = finish[i];
+        arr[i].ind = i+1;
+    }
+    sort(arr,arr+size,comparator);
+    int count = 1;
+    int e = arr[0].end;
+    for(int i = 1 ; i<size ; i++){
+        if(arr[i].start >= e){
+            count++;
+            e = arr[i].end;
+        }
+    }
+    return count;
+}
