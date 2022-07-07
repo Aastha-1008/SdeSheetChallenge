@@ -1,0 +1,18 @@
+void find(string &s , int n , int st , vector<string>&ans){
+    if(st==n){
+        ans.push_back(s);
+        return ;
+    }
+    for(int i = st ; i<n ; i++){
+        swap(s[i],s[st]);
+        find(s,n,st+1,ans);
+        swap(s[i],s[st]);
+    }
+}
+vector<string> findPermutations(string &s) {
+    // Write your code here.
+    vector<string>ans;
+    int size = s.length();
+    find(s,size,0,ans);
+    return ans;
+}
