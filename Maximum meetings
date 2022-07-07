@@ -1,0 +1,36 @@
+#include<algorithm>
+struct meeting{
+    int start;
+    int end;
+    int  ind;
+};
+bool comparator(struct meeting m1 , struct meeting m2){
+    if(m1.end <m2.end)return true;
+    if(m1.end > m2.end)return false;
+    if(m1.ind < m2.ind)return true;
+    return false;
+}
+
+
+
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    int size  = start.size();
+    vector<int>ans;
+    struct meeting   meet[size];
+    for(int i = 0  ; i< size ; i++){
+        meet[i].start=start[i];
+        meet[i].end=end[i];
+        meet[i].ind=i+1;
+    }
+    sort(meet,meet+size,comparator);
+    int endtime = meet[0].end;
+    ans.push_back(meet[0].ind);
+    for(int i = 1 ; i<size ; i++){
+        if(meet[i].start > endtime){
+            ans.push_back(meet[i].ind);
+            endtime = meet[i].end;
+        }
+    }
+    return ans;
+}
