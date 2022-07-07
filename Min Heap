@@ -1,0 +1,41 @@
+void heapify(vector<int>&minheap, int i){
+    int left = 2*i+1;
+    int right = 2*i+2;
+    int smallest = i;
+    if(left<minheap.size() && minheap[i]>minheap[left])smallest = left;
+    if(right<minheap.size() && minheap[right]<minheap[smallest])smallest = right;
+    if(smallest!=i){
+        swap(minheap[smallest],minheap[i]);
+        heapify(minheap,smallest);
+    }
+}
+void build(vector<int>&minheap,int ind){
+    if(ind && minheap[(ind-1)/2] > minheap[ind]){
+        swap(minheap[ind],minheap[(ind-1)/2]);
+        build(minheap,(ind-1)/2);
+    }
+}
+void pop(vector<int>&minheap){
+    minheap[0]=minheap[minheap.size()-1];
+    minheap.pop_back();
+    heapify(minheap,0);
+}
+void push(vector<int>&minheap){
+    build(minheap,minheap.size()-1);
+}
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    // Write your code here.
+    vector<int>minheap;
+    vector<int>ans;
+    for(int i = 0 ; i< n ; i++){
+        if(q[i][0] == 0){
+            minheap.push_back(q[i][1]);
+            push(minheap);
+        }
+        else{
+            ans.push_back(minheap[0]);
+            pop(minheap);
+        }
+    }
+    return ans;
+}
