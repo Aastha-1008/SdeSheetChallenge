@@ -1,0 +1,40 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+#include<queue>
+int getMaxWidth(TreeNode<int> *root)
+{
+    // Write your code here.
+    if(root == NULL)return 0;
+    queue<TreeNode<int>*>q;
+    q.push(root);
+    int size = q.size();
+    int maxsize = size;
+    while(!q.empty()){
+        size = q.size();
+        for(int i = 0 ; i<size ; i++){
+            TreeNode<int>* temp = q.front();
+            q.pop();
+            if(temp->left!=NULL)q.push(temp->left);
+            if(temp->right!=NULL)q.push(temp->right);
+        }
+        maxsize = max ( maxsize , size );
+    }
+    return maxsize;
+}
