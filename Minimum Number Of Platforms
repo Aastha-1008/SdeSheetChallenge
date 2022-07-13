@@ -1,0 +1,19 @@
+int calculateMinPatforms(int at[], int dt[], int n) {
+    // Write your code here.
+    sort(at,at+n);
+    sort(dt,dt+n);
+    int pres = 1 , train = 1;
+    int a =1 , d =0;
+    while(a<n){
+        if(at[a]<=dt[d]){
+            a++;
+            pres++;
+        }
+        else{
+            d++;
+            pres--;
+        }
+        train = max( train , pres);
+    }
+    return train;
+}
