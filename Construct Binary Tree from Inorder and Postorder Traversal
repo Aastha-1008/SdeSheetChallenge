@@ -1,0 +1,44 @@
+/************************************************************
+   
+   Following is the TreeNode class structure
+   
+   class TreeNode<T>
+   { 
+   public:
+        T data; 
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+   
+        TreeNode(T data) 
+  		{ 
+            this -> data = data; 
+            left = NULL; 
+            right = NULL; 
+        }
+   };
+   
+   
+ ************************************************************/
+#include<map>
+TreeNode<int>* make(vector<int>& postOrder , vector<int>&inOrder , map<int,int>&m ,int lp , int hp,int li, int hi ){
+    if(lp<0 || lp>hp)return NULL;
+    
+    int val = postOrder[hp];
+    TreeNode<int>* root = new TreeNode<int>(val);
+    int ind = m[val];
+    int len = lp+ind-li;
+    root->left = make(postOrder,inOrder,m,lp,len-1,li,ind-1);
+    root->right = make(postOrder,inOrder,m,len,hp-1,ind+1,hi);
+    return root;
+}
+
+TreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postOrder, vector<int>& inOrder) 
+{
+	// Write your code here.
+    int n = postOrder.size();
+    map<int,int>m;
+    for(int i = 0 ; i<n; i++){
+        m[inOrder[i]] = i;
+    }
+    return make(postOrder,inOrder,m,0,n-1,0,n-1);
+}
