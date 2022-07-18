@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+vector<vector<int>>ans;
+void find(vector<int> &arr , int st , int en , vector<int>& v){
+    if(st == en){
+        ans.push_back(v);
+        return;
+    }
+    v.push_back(arr[st]);
+    find(arr,st+1,en,v);
+    v.pop_back();
+    while(st+1 < en && arr[st]==arr[st+1])st++;
+    find(arr,st+1,en,v);
+}
+
+vector<vector<int>> uniqueSubsets(int n, vector<int> &arr)
+{
+    // Write your code here.
+    sort(arr.begin(),arr.end());
+    ans.clear();
+    if(n==0)return ans;
+
+    vector<int>v;
+    find(arr,0,n , v );
+    sort(ans.begin(),ans.end());
+    return ans;
+}
