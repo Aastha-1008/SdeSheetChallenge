@@ -1,0 +1,32 @@
+#include<math.h>
+int m , n;
+int check(string str, string pat , int s){
+    int j = 0 ;
+    while(s<n && j<m){
+        if(str[s] != pat[j]) return 0;
+        s++;
+        j++;
+    }
+    return 1;
+}
+vector<int> stringMatch(string &str, string &pat) {
+    // Write your code here
+    vector<int>ans;
+    n = str.size();
+    m = pat.size();
+    int hashs = 0 ; //hashvalue of string str
+    int hashp = 0 ; //hashvalue of string pat
+    for(int i = 0 ; i<m ; i++){
+        hashs += ( (str[i]-'A'+1)*pow(5,i));
+        hashp += ( (pat[i]-'A'+1)*pow(5,i));
+    }
+
+    if(hashs == hashp){
+        if(check(str,pat,0))ans.push_back(0);
+    }
+    for(int i = m ; i<n; i++){
+        hashs =((hashs-(str[i-m]-'A'+1))/5) + ((str[i]-'A'+1)*pow(5,m-1));
+        if(hashs==hashp){if(check(str,pat,i-m+1))ans.push_back(i-m+1);}
+    }
+    return ans;
+}
