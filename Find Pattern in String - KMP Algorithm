@@ -1,0 +1,26 @@
+void prefix(string p , vector<int>& pres){
+    pres[0]=0;
+    int len = 0 ;
+    for(int i = 1 ; i<p.size() ; i++){
+        while(len>0 && p[i] != p[len])len = pres[len-1];
+        if(p[i] == p[len])len++;
+        pres[i] = len;
+    }
+}
+bool findPattern(string p, string s)
+{
+    // Write your code here.
+    int m = p.size() ;
+    int n = s.size() ;
+    
+    vector<int>pres(m,0);
+    prefix(p,pres);
+    
+    int len = 0 ; 
+    for(int i = 0 ; i<n ; i++){
+        while(len>0 && p[len] != s[i])len = pres[len-1];
+        if(p[len] == s[i])len++;
+        if(len == m)return true;
+    }
+    return false;
+}
