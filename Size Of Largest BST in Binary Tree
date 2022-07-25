@@ -1,0 +1,51 @@
+/************************************************************
+
+    Following is the Binary Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+class Nodeval{
+    public:
+        int maxval,minval,size;
+        Nodeval(int maxval , int minval , int size){
+            this->maxval = maxval;
+            this->minval = minval;
+            this->size = size;
+        }
+};
+Nodeval largest(TreeNode<int>* root){
+    if(!root)return Nodeval( INT_MIN,INT_MAX , 0);
+    
+    auto left = largest(root->left);
+    auto right = largest(root->right);
+    
+    if(left.maxval < root->data && root->data < right.minval) 
+        return Nodeval(max(root->data , right.maxval), min(root->data,left.minval),left.size+right.size+1);
+    
+    return Nodeval(INT_MAX,INT_MIN,max(left.size,right.size));
+}
+int largestBST(TreeNode<int>* root) 
+{
+    // Write your code here.
+    return largest(root).size;
+}
