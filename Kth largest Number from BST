@@ -1,0 +1,44 @@
+/************************************************************
+    Following is the Binary Search Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+#include <stack>
+int KthLargestNumber(TreeNode<int>* root, int k) 
+{
+    // Write your code here.
+    stack<TreeNode<int>*>s;
+    while(true){
+        while(root!=NULL){
+            s.push(root);
+            root = root->right;
+        }
+        if(s.size()==0 && k>0)return -1;
+        root = s.top();
+        s.pop();
+        --k;
+        if(k==0)return root->data;
+        root = root->left;
+    }
+    return -1;
+}
