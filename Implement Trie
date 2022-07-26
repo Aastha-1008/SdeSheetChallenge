@@ -1,0 +1,74 @@
+/*
+    Your Trie object will be instantiated and called as such:
+    Trie* obj = new Trie();
+    obj->insert(word);
+    bool check2 = obj->search(word);
+    bool check3 = obj->startsWith(prefix);
+ */
+struct Node{
+    Node * link[26];
+    bool f = false;
+    bool containkey(char ch){
+        return (link[ch-'a']!=NULL);
+    }
+    void put(char ch , Node* node){
+        link[ch-'a'] = node;
+    }
+    Node* get(char ch){
+     return link[ch-'a'];   
+    }
+    void setfind(){
+        f=true;
+    }
+    bool isfind(){
+        return f;
+    }
+};
+
+
+class Trie {
+private:
+    Node* root;
+public:
+
+    /** Initialize your data structure here. */
+    Trie() {
+		root = new Node();
+    }
+
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+		Node *r = root; 
+        for(int i = 0 ; i<word.length(); i++){
+            if(!r->containkey(word[i])){
+                r->put(word[i],new Node());
+            }
+            r = r->get(word[i]);
+        }
+        r->setfind();
+    }
+
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+		Node * node = root ; 
+        for(int i = 0 ; i<word.length(); i++){
+            if(!node->containkey(word[i])){
+                return false;
+            }
+            node = node->get(word[i]);
+        }
+        return node->isfind();
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        Node * node = root ; 
+        for(int i = 0 ; i<prefix.length(); i++){
+            if(!node->containkey(prefix[i])){
+                return false;
+            }
+            node = node->get(prefix[i]);
+        }
+        return true;
+    }
+};
