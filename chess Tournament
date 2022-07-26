@@ -1,0 +1,34 @@
+bool placed(int dist , int c , vector<int>positions , int n){
+    int placed = 1;
+    int recplaced = 0;
+    for(int i = 1 ; i<n ; i++){
+        if(positions[i] - positions[recplaced] >= dist){
+            placed++;
+            recplaced=i;
+        }
+    }
+    if(placed>=c){
+        return true;
+    }
+    else return false;
+}
+
+int chessTournament(vector<int> positions , int n ,  int c){
+	// Write your code here
+    sort(positions.begin(),positions.end());
+    int l = 0 ; 
+    int h = positions[n-1]-positions[0];
+    int ans = 0 ; 
+    
+    while(l<=h){
+        int mid = (l+h)/2;
+        if(placed(mid,c,positions,n)){
+            ans = mid;
+            l = mid + 1;
+        }
+        else{
+            h = mid - 1;
+        }
+    }
+    return ans;
+}
