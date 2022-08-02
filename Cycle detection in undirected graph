@@ -1,0 +1,47 @@
+#include <unordered_map>
+#include <set>
+#include <queue>
+void preparedadjlist(unordered_map<int,set<int>> &adj,vector<vector<int>>& edges){
+    for(int i = 0 ; i<edges.size() ; i++){
+        int u = edges[i][0];
+        int v = edges[i][1];
+        adj[u].insert(v);
+        adj[v].insert(u);
+    }
+}
+
+int check(int i , int n ,   unordered_map < int,set<int> > &adj ,vector<int>&visited){
+    queue<pair<int,int>>q;
+    q.push({i,-1});
+    visited[i]=1;
+    while(!q.empty()){
+        int fir = q.front().first;
+        int sec = q.front().second;
+        q.pop();
+        for(auto j : adj[fir]){
+            if(visited[j]==1){
+                if(j!=sec){return 1;}
+            }
+            else{
+                visited[j]=1;
+                q.push({j,fir});
+            }
+        }
+        
+    }
+    return 0;
+}
+
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    // Write your code here.
+    unordered_map < int,set<int> > adj ;
+    preparedadjlist(adj,edges);
+    vector<int>visited(n+1,0);
+    for(int i = 1 ; i<=n ; i++){
+        if(!visited[i]){
+            if(check(i,n,adj,visited))return "Yes";
+        }
+    }
+    return "No";
+}
