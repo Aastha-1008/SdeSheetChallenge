@@ -1,0 +1,31 @@
+void find(string &s , vector<string>&dic , vector<string>&ans,int start,string str){
+    if(start>=s.size()){
+        ans.push_back(str);
+        return;
+    }
+    for(int i = start ; i<s.size() ; i++){
+        string t = s.substr(start,i-start+1);
+        bool f = false;
+        for(string p : dic){
+            if(p.compare(t)==0){
+                f = true;
+                break;
+            }
+        }
+        if(f){
+            string x = str;
+            str += t + " ";
+            find(s,dic,ans,i+1,str);
+            str = x;
+        }
+    }
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    // Write your code here
+    vector<string>ans;
+    string str="";
+    find(s,dictionary,ans,0,str);
+    return ans;
+}
