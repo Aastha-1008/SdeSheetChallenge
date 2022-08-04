@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+void kmp(string str , vector<int>& lps , int n){
+    int i = 1;
+    lps[0] = 0 ;
+    for(;i<n;++i){
+        int len = lps[i-1];
+        while(str[len] != str[i]){
+            if(len==0){
+                len = -1;
+                break;
+            }
+            len = lps[len-1];
+        }
+        lps[i] = len + 1;
+    }
+}
+int minCharsforPalindrome(string str) {
+	// Write your code here.
+    string s = str; 
+    reverse(str.begin(),str.end());
+    string ns = s + '$' + str;
+    int n = ns.length();
+    vector<int>lps(n);
+    kmp(ns,lps,n);
+    return s.length()-lps[n-1];
+}
