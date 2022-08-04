@@ -1,0 +1,18 @@
+int minSumPath(vector<vector<int>> &grid) {
+    // Write your code here.
+    int row = grid.size();
+    int col = grid[0].size();
+    for(int i = col-2 ; i>=0 ; i--)grid[row-1][i] += grid[row-1][i+1];
+    for(int i = row-2 ; i>=0 ; i--)grid[i][col-1] += grid[i+1][col-1];
+    for(int i = row-2 ; i>=0 ; i--){
+        for(int j = col-2 ; j>=0 ;j--){
+            grid[i][j] = min(grid[i][j]+grid[i+1][j] , grid[i][j]+grid[i][j+1]);
+        }
+    }
+//     for(int i = 0 ; i<row ; i++){
+//         for(int j  = 0 ; j<col ; j++)cout<<grid[i][j]<<" ";
+//         cout<<endl;
+//     }
+    
+    return grid[0][0];
+}
