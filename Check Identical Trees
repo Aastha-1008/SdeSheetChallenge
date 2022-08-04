@@ -1,0 +1,43 @@
+/**********************************************************
+
+    Following is the Binary Tree Node class structure:
+
+    template <typename T>
+
+    class BinaryTreeNode {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+		
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+***********************************************************/
+void find(BinaryTreeNode<int>* root1, BinaryTreeNode<int>* root2, bool& ans){
+    if(ans==false)return;
+    if(root1==NULL && root2==NULL){return;}
+    if(root1==NULL || root2==NULL){
+        ans=false;
+        return;
+    }
+    if(root1->data == root2->data){
+        find(root1->left,root2->left , ans);
+        find(root1->right,root2->right,ans);
+    }
+    else{
+        ans = false;
+        return;
+    }
+}
+bool identicalTrees(BinaryTreeNode<int>* root1, BinaryTreeNode<int>* root2) {
+    // Write your code here. 	
+    bool ans = true;
+    find(root1,root2,ans);
+    return ans;
+    
+}
