@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+void prepare( unordered_map<int,list<int>>&adj,unordered_map<int,list<int>>&r_adj ,vector<vector<int>>&edges){
+    for(int i = 0 ; i<edges.size() ; i++){
+        int u = edges[i][0];
+        int v = edges[i][1];
+        adj[u].push_back(v);
+        r_adj[v].push_back(u);
+    }
+}
+
+void dfs(unordered_map<int,list<int>>&adj , int node , vector<int>&vis , stack<int>& s){
+    vis[node] = 1;
+    for(auto i: adj[node]){
+        if(!vis[i])
+            dfs(adj,i,vis,s);
+    }
+    s.push(node);
+}
+void r_dfs(unordered_map<int,list<int>>&adj , int node , vector<int>&vis , vector<int>& temp){
+    vis[node] = 1;
+    temp.push_back(node);
+    for(auto i: adj[node]){
+        if(!vis[i])
+            r_dfs(adj,i,vis,temp);
+    }
+}
+
+
+vector<vector<int>> stronglyConnectedComponents(int n, vector<vector<int>> &edges)
+{
+    // Write your code here.
+    unordered_map<int,list<int>>adj;
+    unordered_map<int,list<int>>r_adj;
+    prepare(adj,r_adj,edges);
+    vector<int>vis(n,0);
+    stack<int>s;
+    for(int i = 0 ; i<n ;i++){
+        if(!vis[i]){
+            dfs(adj,i,vis,s);
+        }
+    }
+    vector<vector<int>>ans;
+    vector<int>r_vis(n,0);
+    while(!s.empty()){
+        int node = s.top();
+        s.pop();
+        if(!r_vis[node]){
+            vector<int>temp;
+            r_dfs(r_adj,node,r_vis,temp);
+            ans.push_back(temp);
+        }
+    }
+    return ans;
+}
