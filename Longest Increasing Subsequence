@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+int longestIncreasingSubsequence(int arr[], int n)
+{
+    // Write Your Code here
+    vector<int> temp;
+    temp.push_back(arr[0]);
+    int siz=1;
+    
+    for(int i=1;i<n;i++)
+    {
+        
+        if(arr[i]>temp.back())
+        {
+            temp.push_back(arr[i]);
+            siz++;
+        }
+        else{
+            
+            int inx=lower_bound(temp.begin(),temp.end(),arr[i])-temp.begin();
+            
+            temp[inx]=arr[i];
+            
+        }
+        
+    }
+    
+    
+    return siz;
+}
+//DP approach
+#include<bits/stdc++.h>
+int find(int arr[],int ind, int prev , int n , vector<vector<int>>&dp){
+    if(ind == n)return 0;
+    if(dp[ind][prev+1] != -1)return dp[ind][prev+1];
+    int taken = 0;
+    if(prev == -1 ||arr[ind]>arr[prev]){
+        taken = 1 + find(arr,ind+1,ind,n,dp);
+    }
+            int nottaken = 0+find(arr,ind+1,prev , n, dp);
+
+    return dp[ind][prev+1] = max(taken,nottaken);
+}
+int longestIncreasingSubsequence(int arr[], int n)
+{
+    // Write Your Code here
+    vector<vector<int>>dp(n,vector<int>(n,-1));
+    return find(arr,0,-1,n,dp);
+}
