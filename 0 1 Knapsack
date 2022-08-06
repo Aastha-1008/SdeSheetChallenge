@@ -1,0 +1,22 @@
+int find(int n , int w ,vector<int>& values , vector<int>&weights ,vector<vector<int>>& dp){
+    if(n==0){
+        if(w>= weights[0])return values[0];
+        else return 0;
+    }
+    if(dp[n][w] != -1){
+        return dp[n][w];
+    }
+    int nottake = find(n-1,w,values,weights,dp);
+    int take = 0;
+    if(w>=weights[n]){
+        take = values[n] + find(n-1,w-weights[n] , values,weights,dp);
+    }
+    return dp[n][w] = max( take , nottake);
+}
+
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	// Write your code here
+    vector<vector<int>> dp(n+1, vector<int> (w+1,-1));
+    return find(n-1,w,values,weights,dp);
+}
