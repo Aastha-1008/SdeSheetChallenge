@@ -1,0 +1,103 @@
+#include<bits/stdc++.h>
+int palindromePartitioning(string str) {
+    // Write your code here
+    int n = str.length();
+    vector<vector<bool>>check(n , vector<bool>(n));
+    for(int  g = 0 ; g<n ; g++){
+        for(int row = 0, col = g ; col<n ;row++, col++){
+            if(g==0){
+                check[row][col] = true;
+            }
+            else if(g == 1){
+                if(str[row] == str[col])
+                    check[row][col] = true;
+                else check[row][col] =false;
+            }
+            else{
+                if(str[row]==str[col] && check[row+1][col-1] == true){
+                    check[row][col] = true;
+                }
+                else{
+                    check[row][col] = false;
+                }
+            }
+        }
+    }
+
+    vector<vector<int>>mincut(n,vector<int>(n,0));
+    for(int g = 0 ; g<n ;g++){
+        for(int col = g ,row =0; col<n ; col++,row++){
+            if(g==0){
+                mincut[row][col] = 0;
+            }
+            else if(g == 1){
+                if(str[row]==str[col]){
+                    mincut[row][col] = 0;
+                }
+                else{
+                    mincut[row][col] = 1;
+                }
+            }
+            else{
+                if(check[row][col]){
+                    mincut[row][col] = 0;
+                }
+                else{
+                    int minval = INT_MAX;
+                    for(int k = row ; k<col; k++){
+                        int left = mincut[row][k];
+                        int right = mincut[k+1][col];
+                        minval = min(minval , left+right+1);
+                    }
+                    mincut[row][col] = minval;
+                }
+            }
+        }
+    }
+    return mincut[0][n-1];
+}
+//// 2nd Method
+#include<bits/stdc++.h>
+int palindromePartitioning(string str) {
+    // Write your code here
+    int n = str.length();
+    vector<vector<bool>>check(n , vector<bool>(n));
+    for(int  g = 0 ; g<n ; g++){
+        for(int row = 0, col = g ; col<n ;row++, col++){
+            if(g==0){
+                check[row][col] = true;
+            }
+            else if(g == 1){
+                if(str[row] == str[col])
+                    check[row][col] = true;
+                else check[row][col] =false;
+            }
+            else{
+                if(str[row]==str[col] && check[row+1][col-1] == true){
+                    check[row][col] = true;
+                }
+                else{
+                    check[row][col] = false;
+                }
+            }
+        }
+    }
+
+    vector<int>mincut(n);
+    mincut[0] = 0;
+    for(int col = 1 ; col<n ; col++){
+        if(check[0][col]){
+            mincut[col] = 0;
+        }
+        else{
+            int minval = INT_MAX;
+            for(int row = col ; row >=1 ; row--){
+                if(check[row][col]){
+                    if(mincut[row-1]<minval)minval = mincut[row-1];
+                }
+            }
+            mincut[col] = minval+1;
+        }
+    }
+    return mincut[n-1];
+}
