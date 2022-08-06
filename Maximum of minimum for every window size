@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+
+void next(vector<int>a , vector<int>&ns, int n){
+    stack<int>s;
+    s.push(n-1);
+    ns.push_back(n);
+    for(int i = n-2 ; i>=0 ;i--){
+        while(!s.empty() && a[s.top()]>=a[i])s.pop();
+        int small = s.empty()?n:s.top();
+        ns.push_back(small);
+        s.push(i);
+    }
+    reverse(ns.begin(),ns.end());
+}
+void previous(vector<int>a , vector<int>&ps, int n){
+    stack<int>s;
+    s.push(0);
+    ps.push_back(-1);
+    for(int i = 1 ; i<n ;i++){
+        while(!s.empty() && a[s.top()]>=a[i])s.pop();
+        int small = s.empty()?-1:s.top();
+        ps.push_back(small);
+        s.push(i);
+    }
+}
+
+vector<int> maxMinWindow(vector<int> a, int n) {
+    // Write your code here.
+    vector<int>ns;
+    next(a,ns,n);
+    vector<int>ps;
+    previous(a,ps,n);
+    vector<int>ans(n,INT_MIN);
+    for(int i = 0 ; i<n ; i++){
+        int len = ns[i]-ps[i]-2;
+        ans[len] = max(a[i],ans[len]);
+    }
+    for(int i = n-2 ; i>=0 ; i--){
+        ans[i] = max(ans[i],ans[i+1]);
+    }
+    return ans;
+}
