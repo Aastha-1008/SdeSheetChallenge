@@ -1,0 +1,29 @@
+int find(vector<int>&v , int mid){
+    int l = 0 , h = v.size()-1;
+    while(l<=h){
+        int md = (l+h)>>1;
+        if(v[md]<=mid)l = md+1;
+        else h = md-1;
+    }
+    return l;
+}
+
+int getMedian(vector<vector<int>> &matrix)
+{
+    // Write your code here.
+    int row = matrix.size();
+    int col = matrix[0].size();
+    int total_element = row*col;
+    int low = 1 ; 
+    int high = 1e9;
+    while(low<=high){
+        int mid = (low+high)/2;
+        int cnt = 0 ;
+        for(int i = 0 ; i<row ; i++ ){
+            cnt += find(matrix[i],mid);
+        }
+        if(cnt <= total_element/2) low = mid+1;
+        else high = mid-1;
+    }
+    return low;
+}
