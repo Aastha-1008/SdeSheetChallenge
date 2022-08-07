@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+void findMedian(int *arr, int n)
+{
+    // Write your code here
+    priority_queue<int>maxheap,minheap;
+    for(int i = 0 ; i<n ;i++){
+        maxheap.push(arr[i]);
+        minheap.push(-maxheap.top());
+        maxheap.pop();
+        if(maxheap.size() < minheap.size()){
+            maxheap.push(-minheap.top());
+            minheap.pop();
+            cout<<maxheap.top()<<" ";
+        }
+        else{
+            cout<<(maxheap.top()-minheap.top())/2<<" ";
+        }
+        
+    }
+    return ;
+}
