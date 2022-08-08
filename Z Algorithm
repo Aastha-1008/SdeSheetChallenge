@@ -1,0 +1,38 @@
+void maketable(string ns,vector<int>&v){
+    int n  = ns.length();
+    int l = 0 , r = 0;
+    for(int k = 1 ; k<n ; k++){
+        if(k>r){
+            l = r = k;
+            while(r<n && ns[r] == ns[r-l])r++;
+            v[k] = r-l;
+            r--;
+        }
+        else{
+            int k1 = k - l;
+            if(v[k1] <r-k+1)v[k] = v[k1];
+            else{
+                l = k;
+                while(r<n && ns[r] == ns[r-l])r++;
+                v[k] = r-l;
+                r--;
+            }
+        }
+    }
+}
+
+int zAlgorithm(string s, string p, int n, int m)
+{
+	// Write your code here
+    string ns = p + "$" + s;
+    vector<int>v(ns.length(),0);
+    maketable(ns,v);
+    int c = 0 ;
+    for(int i = 0 ; i<ns.length() ; i++){
+        if(v[i] == p.length()){
+            int r = i-p.length()-1;
+            c++;
+        }
+    }
+    return c;
+}
