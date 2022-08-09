@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+
+int solve(int n , int k , vector<vector<int>>& dp){
+    if(k==1)return n;
+    if(n==1 || n==0)return n;
+    if(dp[n][k]!=-1)return dp[n][k];
+    int ans = INT_MAX;
+    int l = 0 , h = n;
+    while(l<=h){
+        int mid = (l+h)/2;
+        int left = solve(mid-1,k-1,dp);
+        int right = solve(n-mid,k,dp);
+        int temp = 1+max(left,right);
+        if(left > right)h = mid-1;
+        else l = mid+1;
+        ans = min(ans,temp);
+    }
+    return dp[n][k] = ans;
+}
+
+int cutLogs(int k, int n)
+{
+    // Write your code here.
+    vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+    return solve(n,k,dp);
+}
