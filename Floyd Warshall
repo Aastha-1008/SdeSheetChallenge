@@ -15,6 +15,7 @@ int floydWarshall(int n, int m, int src, int dest, vector<vector<int>> &edges) {
     for(int k = 1 ; k<= n ; k++){
         for(int i = 1 ; i<= n ; i++){
             for(int j = 0 ; j<=n ; j++){
+            if(dis[i][k]!=1e9 && dis[k][j]!=1e9)
                 dis[i][j] = min(dis[i][j],dis[i][k]+dis[k][j]);
             }
         }
