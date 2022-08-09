@@ -1,0 +1,21 @@
+int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
+    // Write your code here.
+    vector<int>dis(n+1,1e9);
+    dis[src] = 0 ;
+    for(int i = 1 ; i<=n-1 ; i++){
+        for(auto i: edges){
+            if((dis[i[0]] + i[2]) < dis[i[1]] && dis[i[0]]!=1e9){
+                dis[i[1]] = dis[i[0]] + i[2];
+            }
+        }
+    }
+    int fl = 0 ;
+    for(auto i : edges){
+        if((dis[i[0]] + i[2]) < dis[i[1]] && dis[i[0]]!= 1e9){
+            fl = 1;
+            break;
+        }
+    }
+    if(fl == 1)return 1e9;
+    return dis[dest];
+}
