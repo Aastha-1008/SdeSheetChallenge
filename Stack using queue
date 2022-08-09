@@ -36,8 +36,8 @@ class Stack {
         if(!q.empty()){
             int num = q.front();
             q.pop();
+	                size--;
             return num;
-            size--;
         }
         return -1;
     }
