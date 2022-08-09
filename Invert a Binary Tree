@@ -1,0 +1,58 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+#include<bits/stdc++.h>
+TreeNode<int>* mark(TreeNode<int>*node,int start,unordered_map<TreeNode<int>*,TreeNode<int>*>& parent){
+    TreeNode<int>*res;
+    queue<TreeNode<int>*>q;
+    q.push(node);
+    while(!q.empty()){
+        TreeNode<int>* t = q.front();
+        q.pop();
+        if(t->data == start)res = t;
+        if(t->left){
+            q.push(t->left);
+            parent[t->left] = t;
+        }
+        if(t->right){
+            q.push(t->right);
+            parent[t->right] = t;
+        }
+    }
+    return res;
+}
+TreeNode<int> * invertBinaryTree(TreeNode<int> *root, TreeNode<int> *leaf)
+{
+	// Write your code here.
+    if(root==NULL)return NULL;
+    unordered_map<TreeNode<int>*,TreeNode<int>*>parent;
+    leaf = mark(root,leaf->data,parent);
+    TreeNode<int>* curr= leaf;
+    while(parent[curr]){
+        TreeNode<int>* pcurr = parent[curr];
+        if(pcurr->left==curr)pcurr->left=NULL;
+        else{
+            pcurr->right = pcurr->left;
+            pcurr->left = NULL;
+        }
+        curr->left = pcurr;
+        curr= pcurr;
+    }
+    return leaf;
+}
